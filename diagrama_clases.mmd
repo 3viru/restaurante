@@ -1,0 +1,135 @@
+classDiagram
+    class Trabajador {
+        -str __rut
+        -str __nombre
+        -str __rol
+        +rut: str
+        +nombre: str
+        +rol: str
+        +iniciarSesion() bool
+        +tienePermiso(accion: str) bool
+    }
+
+    class Mesero {
+        +tomarPedido(mesa: Mesa) Pedido
+        +marcarMesa(mesa: Mesa, estado: str) void
+        +tienePermiso(accion: str) bool
+    }
+
+    class Cocinero {
+        -str __estacionAsignada
+        +prepararItem(detalle: DetallePedido) void
+        +marcarComoListo(detalle: DetallePedido) void
+        +tienePermiso(accion: str) bool
+    }
+
+    class ItemMenu {
+        -int __id
+        -str __nombre
+        -float __precioBase
+        -bool __disponible
+        +id: int
+        +nombre: str
+        +precioBase: float
+        +disponible: bool
+        +verificarStockIngredientes() bool
+        +preparar(estacion: str) void
+        +obtenerTiempoPreparacion() int
+        +obtenerPrecioVenta(indExt: float) float
+    }
+
+    class PlatoCaliente {
+        -int __temperaturaServicio
+        +temperaturaServicio: int
+        +estacion: str
+        +obtenerTiempoPreparacion() int
+        +obtenerPrecioVenta(indExt: float) float
+    }
+
+    class Bebida {
+        -bool __esAlcoholica
+        +esAlcoholica: bool
+        +estacion: str
+        +obtenerTiempoPreparacion() int
+        +obtenerPrecioVenta(indExt: float) float
+    }
+
+    class BebidaImportada {
+        -str __paisOrigen
+        -float __precioBaseUSD
+        +paisOrigen: str
+        +precioBaseUSD: float
+        +obtenerPrecioVenta(indExt: float) float
+    }
+
+    class Postre {
+        -bool __requiereRefrigeracion
+        +requiereRefrigeracion: bool
+        +estacion: str
+        +obtenerTiempoPreparacion() int
+        +obtenerPrecioVenta(indExt: float) float
+    }
+
+    class Mesa {
+        -int __numero
+        -int __capacidad
+        -str __estado
+        -bool __tienePedidoAbierto
+        +numero: int
+        +capacidad: int
+        +estado: str
+        +tienePedidoAbierto: bool
+        +abrirMesa() bool
+        +cerrarMesa() void
+    }
+
+    class Pedido {
+        -int __numeroPedido
+        -str __fechaHora
+        -str __estado
+        -list __detalles
+        +numeroPedido: int
+        +fechaHora: str
+        +estado: str
+        +detalles: list
+        +agregarDetalle(item: ItemMenu, cant: int, obs: str) DetallePedido
+        +calcularTotal(indExt: float) float
+        +cerrarPedido() void
+    }
+
+    class DetallePedido {
+        -int __cantidad
+        -str __observacion
+        -ItemMenu __item
+        -bool __listo
+        +cantidad: int
+        +observacion: str
+        +item: ItemMenu
+        +listo: bool
+        +marcarPreparado() void
+    }
+
+    class Boleta {
+        -int __numeroBoleta
+        -str __rutCliente
+        -float __montoNeto
+        -float __montoTotal
+        +numeroBoleta: int
+        +rutCliente: str
+        +montoNeto: float
+        +montoTotal: float
+        +validarRut(rut: str)$ bool
+        +emitirBoleta() bool
+    }
+
+    Trabajador <|-- Mesero : Herencia
+    Trabajador <|-- Cocinero : Herencia
+    ItemMenu <|-- PlatoCaliente : Herencia
+    ItemMenu <|-- Bebida : Herencia
+    ItemMenu <|-- Postre : Herencia
+    Bebida <|-- BebidaImportada : Herencia
+    
+    Pedido *-- DetallePedido : Composición
+    DetallePedido o-- ItemMenu : Agregación
+    Mesa "1" -- "0..1" Pedido : Atiende
+    Boleta "1" -- "1" Pedido : Factura

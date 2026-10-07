@@ -25,6 +25,12 @@ class ItemMenuDao(Dao):
         item.id = self.cursor.lastrowid
         return item.id
 
+    def actualizar_stock(self, id_item, disponible):
+        self.cursor.execute("""
+        UPDATE itemmenu SET disponible = ? WHERE id = ?
+        """, (1 if disponible else 0, id_item))
+        self.conexion.commit()
+
     def listar_todos(self):
         query = """
         SELECT i.id, i.nombre, i.precioBase, i.disponible,

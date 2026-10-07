@@ -42,6 +42,9 @@ class Pedido:
         if not item.verificarStockIngredientes():
             raise ItemSinStockError(f"Regla de negocio: El ítem '{item.nombre}' no tiene stock disponible.")
         
+        # Descontar el stock para que no se pueda volver a pedir
+        item.disponible = False
+        
         detalle = DetallePedido(cant, obs, item)
         self.__detalles.append(detalle)
         return detalle

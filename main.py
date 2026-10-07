@@ -285,7 +285,7 @@ def menu_admin(plato_dao, bebida_dao, bebida_imp_dao, postre_dao, boleta_dao, ap
             print(f"❌ Error inesperado: {e}")
 
 
-def menu_mesero(api_dolar, todos_los_items, pedido_dao, boleta_dao):
+def menu_mesero(api_dolar, todos_los_items, pedido_dao, boleta_dao, item_dao):
     while True:
         print("\n=== Menú Mesero ===")
         print("1. Abrir Mesa y Tomar Pedido")
@@ -320,6 +320,7 @@ def menu_mesero(api_dolar, todos_los_items, pedido_dao, boleta_dao):
                         cant = int(input("Cantidad: "))
                         obs = input("Observación: ")
                         nuevo_pedido.agregarDetalle(item_sel, cant, obs)  # Lanza ItemSinStockError o ValueError
+                        item_dao.actualizar_stock(item_sel.id, False)
                         detalles_cocina.append({"mesa": n_mesa, "detalle": nuevo_pedido.detalles[-1]})
                         pedido_dao.guardar_pedido(nuevo_pedido, mesa_numero=n_mesa)
                         print("✅ Ítem agregado al pedido.")
@@ -351,6 +352,7 @@ def menu_mesero(api_dolar, todos_los_items, pedido_dao, boleta_dao):
                         cant = int(input("Cantidad: "))
                         obs = input("Observación: ")
                         pedido.agregarDetalle(item_sel, cant, obs)
+                        item_dao.actualizar_stock(item_sel.id, False)
                         detalles_cocina.append({"mesa": n_mesa, "detalle": pedido.detalles[-1]})
                         pedido_dao.guardar_pedido(pedido, mesa_numero=n_mesa)
                         print("✅ Ítem agregado al pedido.")
@@ -464,6 +466,7 @@ def main():
     postre_dao = PostreDao(conn)
     pedido_dao = PedidoDao(conn)
     boleta_dao = BoletaDao(conn)
+    item_dao = ItemMenuDao(conn)
     api_dolar = MiIndicador()
 
     items_menu = cargar_items_db(conn)
@@ -500,7 +503,7 @@ def main():
         if opcion == "1":
             menu_admin(plato_dao, bebida_dao, bebida_imp_dao, postre_dao, boleta_dao, api_dolar, items_menu)
         elif opcion == "2":
-            menu_mesero(api_dolar, items_menu, pedido_dao, boleta_dao)
+            menu_mesero(api_dolar, items_menu, pedido_dao, boleta_dao, item_dao)
         elif opcion == "3":
             menu_cocina()
         elif opcion == "4":

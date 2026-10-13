@@ -64,6 +64,16 @@ El sistema ofrece dos modalidades de ejecución:
    python main.py
    ```
 
+### Paso 5: (Alternativa) Ejecutar el programa sin usar la consola (Doble clic en Windows)
+
+Si prefiere ejecutar el sistema de forma visual sin escribir comandos en la terminal:
+
+1. **Opción A (Archivo lanzador .bat - Recomendada):**
+   Haga doble clic sobre el archivo `ejecutar.bat` ubicado en la carpeta raíz del proyecto. El programa abrirá automáticamente su ventana interactiva y permanecerá visible al finalizar.
+
+2. **Opción B (Doble clic directo):**
+   Haga doble clic directamente sobre el archivo `main.py` en el Explorador de Archivos de Windows para iniciar la aplicación.
+
 ---
 
 ## 3. Decisiones de Seguridad: Cómo se evita la inyección SQL y qué entradas se validan

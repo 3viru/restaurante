@@ -13,8 +13,8 @@
 **Sistema de Administración de Restaurante:** Software integral de gestión para restaurante bajo el paradigma de Programación Orientada a Objetos Segura. Administra el catálogo polimórfico de ítems (platos calientes, bebidas nacionales, bebidas importadas y postres), el estado de las mesas, la apertura y seguimiento de pedidos con composición de detalles, la cocina/estaciones de preparación, el consumo de la API de divisas para productos cotizados en moneda extranjera, y la facturación segura con validación de RUT bajo el algoritmo Módulo 11.
 
 ### Integrantes del Equipo
-- **Integrante 1:** *(Apellido Paterno, Apellido Materno, Nombres - RUT)*
-- **Integrante 2:** *(Apellido Paterno, Apellido Materno, Nombres - RUT)*
+- **Integrante 1:** Sáez Otárola, Saúl Misael
+- **Integrante 2:** Pérez Brogui, Bastián Mauricio
 
 ---
 
@@ -25,7 +25,7 @@ El software fue desarrollado para ejecutarse de forma autónoma en cualquier com
 ### Paso 1: Clonar o descargar el repositorio
 Descargue el repositorio o clónelo desde la consola:
 ```bash
-git clone <URL_DEL_REPOSITORIO>
+git clone https://github.com/3viru/restaurante.git
 cd restaurante
 ```
 

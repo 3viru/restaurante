@@ -18,3 +18,17 @@ class PlatoCalienteDao(ItemMenuDao):
         """, (id_generado, plato.temperaturaServicio))
         self.conexion.commit()
         return id_generado
+
+    def actualizar(self, plato) -> bool:
+        try:
+            super().actualizar(plato)
+            self.cursor.execute("""
+            UPDATE platos_calientes
+            SET temperaturaServicio = ?
+            WHERE id = ?
+            """, (plato.temperaturaServicio, plato.id))
+            self.conexion.commit()
+            return True
+        except Exception as e:
+            self.conexion.rollback()
+            raise e

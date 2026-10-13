@@ -18,3 +18,17 @@ class BebidaDao(ItemMenuDao):
         """, (id_generado, 1 if bebida.esAlcoholica else 0))
         self.conexion.commit()
         return id_generado
+
+    def actualizar(self, bebida) -> bool:
+        try:
+            super().actualizar(bebida)
+            self.cursor.execute("""
+            UPDATE bebidas
+            SET esAlcoholica = ?
+            WHERE id = ?
+            """, (1 if bebida.esAlcoholica else 0, bebida.id))
+            self.conexion.commit()
+            return True
+        except Exception as e:
+            self.conexion.rollback()
+            raise e

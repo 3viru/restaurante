@@ -20,3 +20,17 @@ class BebidaImportadaDao(BebidaDao):
         """, (id_generado, bebida_imp.paisOrigen))
         self.conexion.commit()
         return id_generado
+
+    def actualizar(self, bebida_imp) -> bool:
+        try:
+            super().actualizar(bebida_imp)
+            self.cursor.execute("""
+            UPDATE bebidas_importadas
+            SET paisOrigen = ?
+            WHERE id = ?
+            """, (bebida_imp.paisOrigen, bebida_imp.id))
+            self.conexion.commit()
+            return True
+        except Exception as e:
+            self.conexion.rollback()
+            raise e

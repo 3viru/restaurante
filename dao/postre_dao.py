@@ -19,3 +19,17 @@ class PostreDao(ItemMenuDao):
         """, (id_generado, 1 if postre.requiereRefrigeracion else 0))
         self.conexion.commit()
         return id_generado
+
+    def actualizar(self, postre) -> bool:
+        try:
+            super().actualizar(postre)
+            self.cursor.execute("""
+            UPDATE postres
+            SET requiereRefrigeracion = ?
+            WHERE id = ?
+            """, (1 if postre.requiereRefrigeracion else 0, postre.id))
+            self.conexion.commit()
+            return True
+        except Exception as e:
+            self.conexion.rollback()
+            raise e

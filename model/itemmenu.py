@@ -44,6 +44,10 @@ class ItemMenu:
     def verificarStockIngredientes(self) -> bool:
         return self.__disponible
 
+    @property
+    def estacion(self) -> str:
+        return "Cocina General"
+
     def preparar(self, estacion: str) -> None:
         pass
 
